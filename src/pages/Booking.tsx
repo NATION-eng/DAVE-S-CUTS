@@ -247,3 +247,4 @@ const inputStyle: React.CSSProperties = {
 };
 
 export default Bookings;
+
