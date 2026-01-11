@@ -1,162 +1,271 @@
-import React, { useState } from "react";
+import React from "react";
 
 const Bookings: React.FC = () => {
-  const [step, setStep] = useState(1);
-  
-  const barbers = ["Seyi", "John", "David"];
-  const services = [
-    { name: "Executive Cut", price: "£35" },
-    { name: "Beard Sculpture", price: "£20" },
-    { name: "The Full Service", price: "£50" }
-  ];
-  const times = ["09:00", "10:30", "12:00", "14:30", "16:00", "17:30"];
-
   return (
-    <div style={containerStyle}>
-      <div style={wrapperStyle}>
-        {/* Header */}
+    <div
+      style={{
+        padding: "120px 5% 80px", // Reduced top padding slightly for better mobile start
+        background: "var(--bg-black)",
+        minHeight: "100vh",
+      }}
+    >
+      <div
+        className="container"
+        style={{ maxWidth: "1100px", margin: "0 auto" }}
+      >
+        {/* Header Section */}
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
-          <h2 className="serif" style={titleStyle}>Secure Your <span className="gold-text">Session</span></h2>
-          <p style={{ color: "var(--gray)" }}>Step {step} of 3</p>
+          <span
+            className="gold-text"
+            style={{
+              letterSpacing: "4px",
+              fontSize: "0.7rem",
+              fontWeight: "bold",
+            }}
+          >
+            RESERVE THE EXPERIENCE
+          </span>
+          <h2
+            className="serif"
+            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", marginTop: "1rem" }}
+          >
+            Book Your <span className="gold-text italic">Session</span>
+          </h2>
         </div>
 
-        {/* Responsive Grid System */}
-        <div className="booking-grid">
-          
-          {/* Section 1: Select Barber & Service */}
-          <div style={cardStyle}>
-            <h3 style={sectionTitle}>1. Select Service</h3>
-            {services.map((s, i) => (
-              <div key={i} style={optionStyle}>
-                <span>{s.name}</span>
-                <span className="gold-text">{s.price}</span>
+        <div className="responsive-booking-grid">
+          {/* Left Column: Details & Info */}
+          <div className="info-column">
+            <h3
+              className="serif"
+              style={{
+                fontSize: "1.8rem",
+                color: "var(--gold)",
+                marginBottom: "1.5rem",
+              }}
+            >
+              The Policy
+            </h3>
+            <div
+              style={{
+                color: "var(--gray)",
+                fontSize: "0.9rem",
+                display: "flex",
+                flexDirection: "column",
+                gap: "1.5rem",
+              }}
+            >
+              <p>• Please arrive 10 minutes before your scheduled time.</p>
+              <p>• Cancellations must be made 24 hours in advance.</p>
+              <p>
+                • Every session includes a complimentary beverage and
+                consultation.
+              </p>
+            </div>
+
+            <div
+              style={{
+                marginTop: "3rem",
+                padding: "2rem",
+                background: "#0c0c0c",
+                border: "1px solid rgba(197, 160, 89, 0.1)",
+              }}
+            >
+              <h4
+                className="serif"
+                style={{ color: "white", marginBottom: "1rem" }}
+              >
+                Opening Hours
+              </h4>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "0.5rem",
+                }}
+              >
+                <span>Mon - Friday</span>
+                <span className="gold-text">9:00 AM - 8:00 PM</span>
               </div>
-            ))}
-            
-            <h3 style={{ ...sectionTitle, marginTop: '2rem' }}>2. Choose Artisan</h3>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-              {barbers.map((b, i) => (
-                <button key={i} style={selectionBtn}>{b}</button>
-              ))}
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span>Saturday</span>
+                <span className="gold-text">5:00 PM - 9:00 PM</span>
+              </div>
             </div>
           </div>
 
-          {/* Section 2: Select Time */}
-          <div style={cardStyle}>
-            <h3 style={sectionTitle}>3. Available Times</h3>
-            <div className="time-grid">
-              {times.map((t, i) => (
-                <button key={i} style={timeBtnStyle}>{t}</button>
-              ))}
+          {/* Right Column: The Detailed Form */}
+          <form
+            style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
+          >
+            {/* Step 1: Service */}
+            <div className="booking-step">
+              <label style={labelStyle}>01. CHOOSE SERVICE</label>
+              <div className="services-grid">
+                <ServiceOption id="s1" name="The Signature" price="₦15k" />
+                <ServiceOption id="s2" name="Beard Art" price="₦8k" />
+                <ServiceOption id="s3" name="Kids Cut" price="₦10k" />
+                <ServiceOption id="s4" name="Full Cut" price="₦25k" />
+              </div>
             </div>
-            
-            <button className="btn-gold" style={confirmBtn}>
-              CONFIRM BOOKING
+
+            {/* Step 2: Artisan */}
+            <div className="booking-step">
+              <label style={labelStyle}>02. SELECT ARTISAN</label>
+              <select style={inputStyle}>
+                <option>First Available Artisan</option>
+                <option>Seyi (Master Artisan)</option>
+                <option>John (Creative Lead)</option>
+                <option>David (Senior Stylist)</option>
+              </select>
+            </div>
+
+            {/* Step 3: Schedule */}
+            <div className="booking-step">
+              <label style={labelStyle}>03. SELECT DATE & TIME</label>
+              <div className="schedule-grid">
+                <input type="date" style={inputStyle} />
+                <input type="time" style={inputStyle} />
+              </div>
+            </div>
+
+            {/* Step 4: Contact */}
+            <div className="booking-step">
+              <label style={labelStyle}>04. YOUR DETAILS</label>
+              <input
+                type="text"
+                placeholder="Full Name"
+                style={{ ...inputStyle, marginTop: "1rem" }}
+              />
+              <input
+                type="tel"
+                placeholder="Phone Number (WhatsApp preferred)"
+                style={{ ...inputStyle, marginTop: "1rem" }}
+              />
+            </div>
+
+            <button
+              type="button"
+              className="btn-gold"
+              style={{ width: "100%", padding: "1.5rem", fontWeight: "bold" }}
+            >
+              CONFIRM RESERVATION
             </button>
-          </div>
-
+          </form>
         </div>
       </div>
 
       <style>{`
-        .booking-grid {
+        /* Responsive Grid Logic */
+        .responsive-booking-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-          gap: 2rem;
+          grid-template-columns: 1fr;
+          gap: 3rem;
+          align-items: start;
         }
 
-        .time-grid {
+        .services-grid, .schedule-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 10px;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+          margin-top: 1rem;
         }
 
-        @media (max-width: 768px) {
-          .booking-grid {
+        .info-column {
+          border-right: none;
+          padding-right: 0;
+          border-bottom: 1px solid rgba(197, 160, 89, 0.1);
+          padding-bottom: 3rem;
+        }
+
+        /* Tablet and Desktop Styles */
+        @media (min-width: 992px) {
+          .responsive-booking-grid {
+            grid-template-columns: 1fr 1.2fr;
+            gap: 4rem;
+          }
+          .info-column {
+            border-right: 1px solid rgba(197, 160, 89, 0.1);
+            padding-right: 4rem;
+            border-bottom: none;
+            padding-bottom: 0;
+          }
+        }
+
+        /* Mobile specific adjustments for very small screens */
+        @media (max-width: 480px) {
+          .services-grid {
             grid-template-columns: 1fr;
           }
-          .time-grid {
-            grid-template-columns: repeat(2, 1fr);
+          .schedule-grid {
+            grid-template-columns: 1fr;
           }
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+          filter: invert(1);
+          cursor: pointer;
+        }
+        
+        .service-card:hover {
+          border-color: var(--gold) !important;
+          background: rgba(197, 160, 89, 0.05) !important;
         }
       `}</style>
     </div>
   );
 };
 
-// --- STYLES ---
+const ServiceOption = ({
+  name,
+  price,
+}: {
+  id: string;
+  name: string;
+  price: string;
+}) => (
+  <div
+    className="service-card"
+    style={{
+      border: "1px solid rgba(255, 255, 255, 0.1)",
+      padding: "1.5rem",
+      cursor: "pointer",
+      transition: "0.3s",
+      background: "#0c0c0c",
+    }}
+  >
+    <div
+      className="serif"
+      style={{ fontSize: "1.1rem", marginBottom: "0.2rem" }}
+    >
+      {name}
+    </div>
+    <div
+      className="gold-text"
+      style={{ fontSize: "0.8rem", fontWeight: "bold" }}
+    >
+      {price}
+    </div>
+  </div>
+);
 
-const containerStyle: React.CSSProperties = {
-  padding: "120px 5% 80px",
-  background: "var(--bg-black)",
-  minHeight: "100vh",
-  color: "white"
-};
-
-const wrapperStyle: React.CSSProperties = {
-  maxWidth: "1100px",
-  margin: "0 auto"
-};
-
-const titleStyle: React.CSSProperties = {
-  fontSize: "clamp(2rem, 5vw, 3rem)",
-  marginBottom: "0.5rem"
-};
-
-const cardStyle: React.CSSProperties = {
-  background: "rgba(255, 255, 255, 0.03)",
-  border: "1px solid rgba(197, 160, 89, 0.1)",
-  padding: "2rem",
-  borderRadius: "4px"
-};
-
-const sectionTitle: React.CSSProperties = {
-  fontSize: "0.8rem",
-  letterSpacing: "2px",
-  textTransform: "uppercase",
-  color: "#c5a059",
-  marginBottom: "1.5rem",
-  borderBottom: "1px solid rgba(197, 160, 89, 0.2)",
-  paddingBottom: "10px"
-};
-
-const optionStyle: React.CSSProperties = {
-  display: "flex",
-  justifyContent: "space-between",
-  padding: "1rem",
-  background: "rgba(255,255,255,0.05)",
-  marginBottom: "10px",
-  cursor: "pointer",
-  transition: "0.3s",
-  border: "1px solid transparent"
-};
-
-const selectionBtn: React.CSSProperties = {
-  padding: "0.8rem",
-  background: "transparent",
-  color: "white",
-  border: "1px solid rgba(255,255,255,0.2)",
-  cursor: "pointer"
-};
-
-const timeBtnStyle: React.CSSProperties = {
-  padding: "1rem",
-  background: "rgba(197, 160, 89, 0.05)",
-  color: "white",
-  border: "1px solid rgba(197, 160, 89, 0.2)",
-  cursor: "pointer",
-  fontSize: "0.9rem"
-};
-
-const confirmBtn: React.CSSProperties = {
-  width: "100%",
-  marginTop: "2rem",
-  padding: "1.2rem",
+const labelStyle: React.CSSProperties = {
+  color: "var(--gold)",
+  fontSize: "0.7rem",
+  letterSpacing: "3px",
   fontWeight: "bold",
-  letterSpacing: "2px",
-  background: "#c5a059",
-  border: "none",
-  cursor: "pointer"
+};
+
+const inputStyle: React.CSSProperties = {
+  width: "100%",
+  background: "transparent",
+  border: "1px solid rgba(197, 160, 89, 0.3)",
+  padding: "1rem",
+  color: "white",
+  fontFamily: "Montserrat, sans-serif",
+  outline: "none",
+  fontSize: "0.9rem",
 };
 
 export default Bookings;
