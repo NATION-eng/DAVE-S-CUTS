@@ -68,7 +68,7 @@ const Navbar: React.FC = () => {
         <li><Link to="/queue" style={navLinkStyle}>Live Queue</Link></li>
         <li><Link to="/contact" style={navLinkStyle}>Contact</Link></li>
         <li>
-          <Link to="/bookings" className="btn-outline" style={bookBtnStyle}>
+          <Link to="/Booking" className="btn-outline" style={bookBtnStyle}>
             BOOK NOW
           </Link>
         </li>
@@ -193,3 +193,4 @@ const lineStyle: React.CSSProperties = {
 };
 
 export default Navbar;
+
