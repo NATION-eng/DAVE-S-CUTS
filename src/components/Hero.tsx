@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 
 const Hero: React.FC = () => {
   return (
@@ -34,8 +36,13 @@ const Hero: React.FC = () => {
           <span className="gold-text italic">This one is felt.</span>
         </h1>
         <div style={{ display: "flex", gap: "1rem" }}>
-          <button className="btn-gold">Book Appointment</button>
-          <button className="btn-outline">Meet Barbers</button>
+          <Link to="/booking">
+            <button className="btn-gold">BOOK APPOINTMENT</button>
+          </Link>
+
+          <Link to="/barbers">
+            <button className="btn-outline">MEET BARBERS</button>
+          </Link>
         </div>
       </div>
     </header>
