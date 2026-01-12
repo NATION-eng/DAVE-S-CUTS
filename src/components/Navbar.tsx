@@ -3,56 +3,59 @@ import { Link, useLocation } from "react-router-dom";
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 992);
   const location = useLocation();
 
-  // Close menu automatically when user changes page
+  // Handle window resizing to switch between desktop and mobile views
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 992);
+      if (window.innerWidth > 992) setIsMenuOpen(false);
+    };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Close menu on page change
   useEffect(() => {
     setIsMenuOpen(false);
   }, [location]);
-
-  // Prevent scrolling when mobile menu is open
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-  }, [isMenuOpen]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <nav
       style={{
-        position: "absolute",
+        position: "fixed",
         top: 0,
         left: 0,
         width: "100%",
         display: "flex",
         justifyContent: "space-between",
         alignItems: "center",
-        padding: "1.5rem 5%",
-        zIndex: 2000,
-        background: "linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%)",
+        padding: isMobile ? "1rem 5%" : "1.5rem 5%",
+        zIndex: 9999,
+        background: "rgba(0, 0, 0, 0.95)",
+        borderBottom: "1px solid rgba(197, 160, 89, 0.1)",
       }}
     >
-      {/* Logo Area */}
+      {/* Logo */}
       <Link to="/" style={{ textDecoration: "none" }}>
         <div
-          className="logo"
           style={{
             color: "white",
             fontWeight: "bold",
             letterSpacing: "2px",
+            lineHeight: 1,
           }}
         >
           DAVE'S{" "}
           <span
             style={{
-              color: "var(--gold)",
+              color: "#c5a059",
               display: "block",
-              fontSize: "0.7rem",
-              letterSpacing: "5px",
+              fontSize: "0.6rem",
+              letterSpacing: "4px",
             }}
           >
             CUT
@@ -60,101 +63,107 @@ const Navbar: React.FC = () => {
         </div>
       </Link>
 
-      {/* DESKTOP NAVIGATION (Hidden on Mobile) */}
-      <ul className="desktop-links">
-        <li><Link to="/" style={navLinkStyle}>Home</Link></li>
-        <li><Link to="/barbers" style={navLinkStyle}>Barbers</Link></li>
-        <li><Link to="/services" style={navLinkStyle}>Services</Link></li>
-        <li><Link to="/queue" style={navLinkStyle}>Live Queue</Link></li>
-        <li><Link to="/contact" style={navLinkStyle}>Contact</Link></li>
-        <li>
-          <Link to="/Booking" className="btn-outline" style={bookBtnStyle}>
-            BOOK NOW
+      {/* --- DESKTOP VIEW --- */}
+      {!isMobile && (
+        <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+          <Link to="/" style={navLinkStyle}>
+            Home
           </Link>
-        </li>
-      </ul>
-
-      {/* HAMBURGER BUTTON (Only visible on Mobile) */}
-      <div className="hamburger" onClick={toggleMenu} style={{ zIndex: 3000 }}>
-        <div className={`line ${isMenuOpen ? "open" : ""}`} style={lineStyle}></div>
-        <div className={`line ${isMenuOpen ? "open" : ""}`} style={{ ...lineStyle, width: isMenuOpen ? "30px" : "20px" }}></div>
-        <div className={`line ${isMenuOpen ? "open" : ""}`} style={lineStyle}></div>
-      </div>
-
-      {/* MOBILE FULL-SCREEN OVERLAY */}
-      <div className={`mobile-overlay ${isMenuOpen ? "active" : ""}`}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem', alignItems: 'center' }}>
-          <Link to="/" style={mobileLinkStyle}>Home</Link>
-          <Link to="/barbers" style={mobileLinkStyle}>Barbers</Link>
-          <Link to="/services" style={mobileLinkStyle}>Services</Link>
-          <Link to="/queue" style={mobileLinkStyle}>Live Queue</Link>
-          <Link to="/contact" style={mobileLinkStyle}>Contact</Link>
-          <Link to="/bookings" className="btn-gold" style={{ ...mobileLinkStyle, color: 'black', background: 'var(--gold)', padding: '1rem 3rem' }}>
+          <Link to="/barbers" style={navLinkStyle}>
+            Barbers
+          </Link>
+          <Link to="/services" style={navLinkStyle}>
+            Services
+          </Link>
+          <Link to="/queue" style={navLinkStyle}>
+            Queue
+          </Link>
+          <Link to="/contact" style={navLinkStyle}>
+            Contact
+          </Link>
+          <Link to="/booking" style={desktopBookBtn}>
             BOOK NOW
           </Link>
         </div>
-      </div>
+      )}
 
-      {/* CSS Logic */}
-      <style>{`
-        .desktop-links {
-          display: flex;
-          list-style: none;
-          align-items: center;
-          gap: 2rem;
-          margin: 0;
-          padding: 0;
-        }
+      {/* --- MOBILE HAMBURGER BUTTON --- */}
+      {isMobile && (
+        <div
+          onClick={toggleMenu}
+          style={{
+            cursor: "pointer",
+            zIndex: 10001,
+            display: "flex",
+            flexDirection: "column",
+            gap: "6px",
+          }}
+        >
+          <div
+            style={{
+              ...lineStyle,
+              transform: isMenuOpen
+                ? "rotate(45deg) translate(6px, 6px)"
+                : "none",
+            }}
+          ></div>
+          <div style={{ ...lineStyle, opacity: isMenuOpen ? 0 : 1 }}></div>
+          <div
+            style={{
+              ...lineStyle,
+              transform: isMenuOpen
+                ? "rotate(-45deg) translate(5px, -6px)"
+                : "none",
+            }}
+          ></div>
+        </div>
+      )}
 
-        .hamburger {
-          display: none;
-          flex-direction: column;
-          gap: 7px;
-          cursor: pointer;
-        }
-
-        .mobile-overlay {
-          position: fixed;
-          top: 0;
-          right: 0;
-          width: 100%;
-          height: 100vh;
-          background: #050505;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          transform: translateX(100%);
-          transition: transform 0.5s cubic-bezier(0.77, 0, 0.175, 1);
-          z-index: 2500;
-        }
-
-        .mobile-overlay.active {
-          transform: translateX(0);
-        }
-
-        /* Hover Effect for Links */
-        .desktop-links a:hover {
-          color: var(--gold) !important;
-        }
-
-        /* Burger Animation */
-        .line.open:nth-child(1) { transform: translateY(9px) rotate(45deg); }
-        .line.open:nth-child(2) { opacity: 0; }
-        .line.open:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
-
-        /* Responsive Breakpoints */
-        @media (max-width: 992px) {
-          .desktop-links {
-            display: none;
-          }
-          .hamburger {
-            display: flex;
-          }
-        }
-      `}</style>
+      {/* --- MOBILE FULL-SCREEN OVERLAY --- */}
+      {isMobile && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100vh",
+            background: "#0a0a0a",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "2.5rem",
+            transition: "transform 0.5s ease-in-out",
+            transform: isMenuOpen ? "translateY(0)" : "translateY(-100%)",
+            zIndex: 10000,
+          }}
+        >
+          <Link to="/" style={mobileLinkStyle}>
+            Home
+          </Link>
+          <Link to="/barbers" style={mobileLinkStyle}>
+            Barbers
+          </Link>
+          <Link to="/services" style={mobileLinkStyle}>
+            Services
+          </Link>
+          <Link to="/queue" style={mobileLinkStyle}>
+            Live Queue
+          </Link>
+          <Link to="/contact" style={mobileLinkStyle}>
+            Contact
+          </Link>
+          <Link to="/booking" style={mobileBookBtn}>
+            BOOK NOW
+          </Link>
+        </div>
+      )}
     </nav>
   );
 };
+
+// --- STYLES ---
 
 const navLinkStyle: React.CSSProperties = {
   color: "white",
@@ -163,34 +172,37 @@ const navLinkStyle: React.CSSProperties = {
   fontSize: "0.75rem",
   letterSpacing: "1.5px",
   fontWeight: 600,
-  transition: "0.3s",
 };
 
-const bookBtnStyle: React.CSSProperties = {
-  textDecoration: "none",
-  fontSize: "0.8rem",
-  fontWeight: "bold",
-  color: "white",
-  padding: "0.8rem 1.5rem",
-  border: "1px solid var(--gold)",
+const desktopBookBtn: React.CSSProperties = {
+  ...navLinkStyle,
+  color: "#c5a059",
+  border: "1px solid #c5a059",
+  padding: "0.6rem 1.2rem",
 };
 
 const mobileLinkStyle: React.CSSProperties = {
   color: "white",
   textDecoration: "none",
-  textTransform: "uppercase",
   fontSize: "1.8rem",
-  letterSpacing: "4px",
   fontWeight: "bold",
-  fontFamily: "'Playfair Display', serif",
+  textTransform: "uppercase",
+  letterSpacing: "3px",
+};
+
+const mobileBookBtn: React.CSSProperties = {
+  ...mobileLinkStyle,
+  color: "#000",
+  background: "#c5a059",
+  padding: "1rem 2.5rem",
+  fontSize: "1.2rem",
 };
 
 const lineStyle: React.CSSProperties = {
-  width: "30px",
+  width: "28px",
   height: "2px",
   background: "white",
-  transition: "0.4s",
+  transition: "0.3s ease-in-out",
 };
 
 export default Navbar;
-
