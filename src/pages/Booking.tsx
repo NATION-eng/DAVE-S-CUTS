@@ -1,249 +1,245 @@
 import React from "react";
 
-const Bookings: React.FC = () => {
-  return (
-    <div
-      style={{
-        padding: "150px 5% 80px",
-        background: "var(--bg-black)",
-        minHeight: "100vh",
-      }}
-    >
-      <div className="container">
-        {/* Header Section */}
-        <div style={{ textAlign: "center", marginBottom: "4rem" }}>
-          <span
-            className="gold-text"
-            style={{
-              letterSpacing: "4px",
-              fontSize: "0.7rem",
-              fontWeight: "bold",
-            }}
-          >
-            RESERVE THE EXPERIENCE
-          </span>
-          <h2
-            className="serif"
-            style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", marginTop: "1rem" }}
-          >
-            Book Your <span className="gold-text italic">Session</span>
-          </h2>
-        </div>
+const Booking: React.FC = () => {
+  return (
+    <div className="booking-wrapper">
+      <div className="container">
 
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-            gap: "4rem",
-            alignItems: "start",
-          }}
-        >
-          {/* Left Column: Details & Info */}
-          <div
-            style={{
-              borderRight: "1px solid rgba(197, 160, 89, 0.1)",
-              paddingRight: "2rem",
-            }}
-          >
-            <h3
-              className="serif"
-              style={{
-                fontSize: "1.8rem",
-                color: "var(--gold)",
-                marginBottom: "1.5rem",
-              }}
-            >
-              The Policy
-            </h3>
-            <div
-              style={{
-                color: "var(--gray)",
-                fontSize: "0.9rem",
-                display: "flex",
-                flexDirection: "column",
-                gap: "1.5rem",
-              }}
-            >
-              <p>• Please arrive 10 minutes before your scheduled time.</p>
-              <p>• Cancellations must be made 24 hours in advance.</p>
-              <p>
-                • Every session includes a complimentary beverage and
-                consultation.
-              </p>
-            </div>
+        {/* HEADER */}
+        <div className="booking-header">
+          <span className="gold-text booking-eyebrow">
+            RESERVE THE EXPERIENCE
+          </span>
+          <h2 className="serif booking-title">
+            Book Your <span className="gold-text italic">Session</span>
+          </h2>
+        </div>
 
-            <div
-              style={{
-                marginTop: "3rem",
-                padding: "2rem",
-                background: "#0c0c0c",
-                border: "1px solid rgba(197, 160, 89, 0.1)",
-              }}
-            >
-              <h4
-                className="serif"
-                style={{ color: "white", marginBottom: "1rem" }}
-              >
-                Opening Hours
-              </h4>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: "0.5rem",
-                }}
-              >
-                <span>Mon - Sunday</span>
-                <span className="gold-text">9:00 AM - 8:00 PM</span>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span>Saturday</span>
-                <span className="gold-text">5:00 PM - 9:00 PM</span>
-              </div>
-            </div>
-          </div>
+        {/* GRID */}
+        <div className="booking-grid">
 
-          {/* Right Column: The Detailed Form */}
-          <form
-            style={{ display: "flex", flexDirection: "column", gap: "2rem" }}
-          >
-            {/* Step 1: Service */}
-            <div className="booking-step">
-              <label style={labelStyle}>01. CHOOSE SERVICE</label>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "1rem",
-                  marginTop: "1rem",
-                }}
-              >
-                <ServiceOption id="s1" name="The Signature" price="₦15k" />
-                <ServiceOption id="s2" name="Beard Art" price="₦8k" />
-                <ServiceOption id="s3" name="Kids Cut" price="₦10k" />
-                <ServiceOption id="s4" name="Full Cut" price="₦25k" />
-              </div>
-            </div>
+          {/* LEFT COLUMN */}
+          <div className="booking-left">
+            <h3 className="serif booking-subtitle">The Policy</h3>
 
-            {/* Step 2: Artisan */}
-            <div className="booking-step">
-              <label style={labelStyle}>02. SELECT ARTISAN</label>
-              <select style={inputStyle}>
-                <option>First Available Artisan</option>
-                <option>Seyi (Master Artisan)</option>
-                <option>John (Creative Lead)</option>
-                <option>David (Senior Stylist)</option>
-              </select>
-            </div>
+            <div className="policy-text">
+              <p>• Please arrive 10 minutes before your scheduled time.</p>
+              <p>• Cancellations must be made 24 hours in advance.</p>
+              <p>• Every session includes a complimentary beverage and consultation.</p>
+            </div>
 
-            {/* Step 3: Schedule */}
-            <div className="booking-step">
-              <label style={labelStyle}>03. SELECT DATE & TIME</label>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: "1rem",
-                  marginTop: "1rem",
-                }}
-              >
-                <input type="date" style={inputStyle} />
-                <input type="time" style={inputStyle} />
-              </div>
-            </div>
+            <div className="opening-hours">
+              <h4 className="serif">Opening Hours</h4>
+              <div className="hours-row">
+                <span>Mon – Sunday</span>
+                <span className="gold-text">9:00 AM – 8:00 PM</span>
+              </div>
+              <div className="hours-row">
+                <span>Saturday</span>
+                <span className="gold-text">5:00 PM – 9:00 PM</span>
+              </div>
+            </div>
+          </div>
 
-            {/* Step 4: Contact */}
-            <div className="booking-step">
-              <label style={labelStyle}>04. YOUR DETAILS</label>
-              <input
-                type="text"
-                placeholder="Full Name"
-                style={{ ...inputStyle, marginTop: "1rem" }}
-              />
-              <input
-                type="tel"
-                placeholder="Phone Number (WhatsApp preferred)"
-                style={{ ...inputStyle, marginTop: "1rem" }}
-              />
-            </div>
+          {/* RIGHT COLUMN */}
+          <form className="booking-form">
 
-            <button
-              type="button"
-              className="btn-gold"
-              style={{ width: "100%", padding: "1.5rem", fontWeight: "bold" }}
-            >
-              CONFIRM RESERVATION
-            </button>
-          </form>
-        </div>
-      </div>
+            {/* SERVICE */}
+            <div className="booking-step">
+              <label>01. CHOOSE SERVICE</label>
+              <div className="form-grid">
+                <ServiceOption name="The Signature" price="₦15k" />
+                <ServiceOption name="Beard Art" price="₦8k" />
+                <ServiceOption name="Kids Cut" price="₦10k" />
+                <ServiceOption name="Full Cut" price="₦25k" />
+              </div>
+            </div>
 
-      <style>{`
-        input[type="date"]::-webkit-calendar-picker-indicator,
-        input[type="time"]::-webkit-calendar-picker-indicator {
-          filter: invert(1);
-          cursor: pointer;
-        }
-        
-        .service-card:hover {
-          border-color: var(--gold) !important;
-          background: rgba(197, 160, 89, 0.05) !important;
-        }
-      `}</style>
-    </div>
-  );
+            {/* BARBER */}
+            <div className="booking-step">
+              <label>02. SELECT ARTISAN</label>
+              <select className="booking-input">
+                <option>First Available Artisan</option>
+                <option>Seyi (Master Artisan)</option>
+                <option>John (Creative Lead)</option>
+                <option>David (Senior Stylist)</option>
+              </select>
+            </div>
+
+            {/* DATE */}
+            <div className="booking-step">
+              <label>03. SELECT DATE & TIME</label>
+              <div className="form-grid">
+                <input type="date" className="booking-input" />
+                <input type="time" className="booking-input" />
+              </div>
+            </div>
+
+            {/* DETAILS */}
+            <div className="booking-step">
+              <label>04. YOUR DETAILS</label>
+              <input className="booking-input" placeholder="Full Name" />
+              <input className="booking-input" placeholder="Phone Number" />
+            </div>
+
+            <button className="btn-gold booking-btn">
+              CONFIRM RESERVATION
+            </button>
+          </form>
+        </div>
+      </div>
+
+      {/* ===== STYLES (ALL IN ONE FILE) ===== */}
+      <style>{`
+        .booking-wrapper {
+          padding: 150px 5% 80px;
+          background: var(--bg-black);
+          min-height: 100vh;
+        }
+
+        .booking-header {
+          text-align: center;
+          margin-bottom: 4rem;
+        }
+
+        .booking-eyebrow {
+          letter-spacing: 4px;
+          font-size: 0.7rem;
+          font-weight: bold;
+        }
+
+        .booking-title {
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          margin-top: 1rem;
+        }
+
+        .booking-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 4rem;
+          align-items: start;
+        }
+
+        .booking-left {
+          border-right: 1px solid rgba(197,160,89,0.15);
+          padding-right: 2rem;
+        }
+
+        .booking-subtitle {
+          color: var(--gold);
+          margin-bottom: 1.5rem;
+        }
+
+        .policy-text {
+          color: var(--gray);
+          font-size: 0.9rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1.2rem;
+        }
+
+        .opening-hours {
+          margin-top: 3rem;
+          padding: 2rem;
+          background: #0c0c0c;
+          border: 1px solid rgba(197,160,89,0.1);
+        }
+
+        .hours-row {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 0.5rem;
+        }
+
+        .booking-form {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+        }
+
+        .booking-step label {
+          color: var(--gold);
+          font-size: 0.7rem;
+          letter-spacing: 3px;
+          font-weight: bold;
+        }
+
+        .form-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1rem;
+          margin-top: 1rem;
+        }
+
+        .booking-input {
+          width: 100%;
+          background: transparent;
+          border: 1px solid rgba(197,160,89,0.3);
+          padding: 1rem;
+          color: white;
+          margin-top: 1rem;
+          outline: none;
+        }
+
+        .service-card {
+          border: 1px solid rgba(255,255,255,0.1);
+          padding: 1.5rem;
+          cursor: pointer;
+          transition: 0.3s;
+          background: #0c0c0c;
+        }
+
+        .service-card:hover {
+          border-color: var(--gold);
+          background: rgba(197,160,89,0.05);
+        }
+
+        .booking-btn {
+          padding: 1.5rem;
+          font-weight: bold;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 992px) {
+          .booking-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .booking-left {
+            border-right: none;
+            border-bottom: 1px solid rgba(197,160,89,0.15);
+            padding-right: 0;
+            padding-bottom: 2rem;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .booking-wrapper {
+            padding: 120px 6% 60px;
+          }
+
+          .form-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+          filter: invert(1);
+          cursor: pointer;
+        }
+      `}</style>
+    </div>
+  );
 };
 
-// Sub-component for Service Selection Cards
-const ServiceOption = ({
-  name,
-  price,
-}: {
-  id: string;
-  name: string;
-  price: string;
-}) => (
-  <div
-    className="service-card"
-    style={{
-      border: "1px solid rgba(255, 255, 255, 0.1)",
-      padding: "1.5rem",
-      cursor: "pointer",
-      transition: "0.3s",
-      background: "#0c0c0c",
-    }}
-  >
-    <div
-      className="serif"
-      style={{ fontSize: "1.1rem", marginBottom: "0.2rem" }}
-    >
-      {name}
-    </div>
-    <div
-      className="gold-text"
-      style={{ fontSize: "0.8rem", fontWeight: "bold" }}
-    >
-      {price}
-    </div>
-  </div>
+const ServiceOption = ({ name, price }: { name: string; price: string }) => (
+  <div className="service-card">
+    <div className="serif">{name}</div>
+    <div className="gold-text" style={{ fontSize: "0.8rem", fontWeight: "bold" }}>
+      {price}
+    </div>
+  </div>
 );
 
-const labelStyle: React.CSSProperties = {
-  color: "var(--gold)",
-  fontSize: "0.7rem",
-  letterSpacing: "3px",
-  fontWeight: "bold",
-};
-
-const inputStyle: React.CSSProperties = {
-  width: "100%",
-  background: "transparent",
-  border: "1px solid rgba(197, 160, 89, 0.3)",
-  padding: "1rem",
-  color: "white",
-  fontFamily: "Montserrat, sans-serif",
-  outline: "none",
-  fontSize: "0.9rem",
-};
-
-export default Bookings;
+export default Booking;
